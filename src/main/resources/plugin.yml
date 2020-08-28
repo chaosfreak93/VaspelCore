@@ -1,0 +1,39 @@
+name: VaspelCore
+version: ${project.version}
+author: '__keiner__'
+api-version: '1.16'
+main: de.beyonddark.VaspelCore.Main
+load: 'POSTWORLD'
+prefix: 'VaspelCore'
+commands:
+  spawn:
+    description: Damit kommst du zum Spawn.
+  cl:
+    description: Schreibe /cl für die Anleitung.
+  reloadvaspel:
+    description: Admin Command
+    permission: vaspelcore.reload
+  sethome:
+    description: Hier mit setzt du dein Haus.
+  home:
+    description: Teleportiert dich zu deinem Haus.
+  removehome:
+    description: Hier mit kannst du ein bestimmtes deine Häuser löschen.
+  delhome:
+    description: Hier mit kannst du ein bestimmtes deine Häuser löschen.
+  tpa:
+    description: Sende eine teleport anfrage an einen Spieler.
+  tpaccept:
+    description: Akzeptiere die Teleport Anfrage.
+  tpdeny:
+    description: Verweigere die Teleport Anfrage.
+  invsee:
+    description: Admin Command
+    permission: vaspelcore.invsee
+  vanish:
+    description: Admin Command
+    permission: vaspelcore.vanish
+  fend:
+    description: Damit kommst du zum Farm End.
+  fnether:
+    description: Damit kommst du zum Farm Nether.
