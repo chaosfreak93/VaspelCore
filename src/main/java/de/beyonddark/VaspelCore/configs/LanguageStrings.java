@@ -4,6 +4,7 @@
 
 package de.beyonddark.VaspelCore.configs;
 
+import de.beyonddark.VaspelCore.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,7 +19,7 @@ public class LanguageStrings {
     private static FileConfiguration customFile;
 
     public static void setup() throws IOException {
-        file = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("VaspelCore")).getDataFolder(), "language.yml");
+        file = new File(Main.getInstance().getDataFolder(), "language.yml");
 
         if (!file.exists()) {
             file.createNewFile();
