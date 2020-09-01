@@ -53,13 +53,13 @@ public class Main extends JavaPlugin {
     @Override
     public void onLoad() {
         super.onLoad();
+        setInstance(this);
         Load.setupConfigs();
     }
 
     @Override
     public void onEnable() {
         super.onEnable();
-        setInstance(this);
         this.getServer().getPluginManager().registerEvents(new EventListener(), this);
         Enable.checkPlayerSleeping();
         Enable.registerCommands();

@@ -37,8 +37,19 @@ public class EventListener implements Listener {
     private final Main plugin = Main.getInstance();
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
+    public void onPlayerJoin(PlayerJoinEvent e) throws SQLException {
         Player p = e.getPlayer();
+        String playerName = p.getName();
+        Statement st = Main.getConnection().createStatement();
+        ResultSet rangNumber = st.executeQuery("SELECT * FROM players WHERE uuid='" + p.getUniqueId().toString() + "';");
+        rangNumber.beforeFirst();
+        rangNumber.next();
+        ResultSet rangName = st.executeQuery("SELECT * FROM rangs WHERE id='" + rangNumber.getInt("rang") + "';");
+        rangName.beforeFirst();
+        rangName.next();
+        p.setPlayerListName(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("playerName")).replace("%player%", playerName).replace("%group%", rangName.getString("name").toUpperCase())));
+        p.setCustomName(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("playerName")).replace("%player%", playerName).replace("%group%", rangName.getString("name").toUpperCase())));
+        p.setCustomNameVisible(true);
         e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("join-message")).replace("%player%", p.getDisplayName())));
         Sidebar s = new Sidebar();
         s.setup(p);
@@ -54,12 +65,13 @@ public class EventListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("leave-message")).replace("%player%", p.getDisplayName())));
+        Main.vanishedPlayer.remove(p);
     }
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) throws SQLException {
         Player p = e.getPlayer();
-        String playerName = p.getDisplayName();
+        String playerName = p.getName();
         String message = e.getMessage();
         Statement st = Main.getConnection().createStatement();
         ResultSet rangNumber = st.executeQuery("SELECT * FROM players WHERE uuid='" + p.getUniqueId().toString() + "';");
