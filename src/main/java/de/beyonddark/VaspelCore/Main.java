@@ -103,7 +103,7 @@ public class Main extends JavaPlugin {
     }
 
     public void removePlayerHome(Player player, String name) throws SQLException {
-        if (!this.utils.removeHome(player, name)) {
+        if (this.utils.removeHome(player, name)) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("removehome")).replace("%name%", name)));
         } else {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("error-removehome")).replace("%name%", name)));
