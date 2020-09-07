@@ -35,7 +35,7 @@ public class Sidebar {
             public void run() {
                 playerCount.setSuffix("§7" + Bukkit.getServer().getOnlinePlayers().size());
             }
-        }.runTaskTimer(plugin, 0, 10);
+        }.runTaskTimerAsynchronously(plugin, 0, 1);
 
         p.setScoreboard(scoreboard);
     }

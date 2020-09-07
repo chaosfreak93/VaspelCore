@@ -58,7 +58,7 @@ public class Enable {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 0, 10);
+        }.runTaskTimerAsynchronously(plugin, 0, 1);
     }
 
     public static void setupWorlds() {

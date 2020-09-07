@@ -65,7 +65,7 @@ public class Main extends JavaPlugin {
         Enable.registerCommands();
         Enable.setupWorlds();
 
-        BukkitRunnable task = new BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 try {
@@ -74,9 +74,7 @@ public class Main extends JavaPlugin {
                     throwables.printStackTrace();
                 }
             }
-        };
-
-        task.runTaskAsynchronously(this);
+        }.runTaskAsynchronously(this);
     }
 
     @Override
