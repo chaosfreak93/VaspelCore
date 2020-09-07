@@ -29,7 +29,7 @@ public class SpawnCommand implements CommandExecutor {
                 location.setY(world.getSpawnLocation().getY());
                 location.setZ(world.getSpawnLocation().getZ());
                 Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).teleport(location);
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', LanguageStrings.get().getString("spawn").replace("%player%", ((Player) sender).getDisplayName())));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', LanguageStrings.get().getString("spawn").replace("%player%", sender.getName())));
             } else System.out.println("World Is null!");
         }
         return true;
