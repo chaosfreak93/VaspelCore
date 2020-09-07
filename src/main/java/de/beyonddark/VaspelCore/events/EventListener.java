@@ -5,8 +5,6 @@
 package de.beyonddark.VaspelCore.events;
 
 import de.beyonddark.VaspelCore.Main;
-import de.beyonddark.VaspelCore.configs.LanguageStrings;
-import de.beyonddark.VaspelCore.configs.MainConfig;
 import de.beyonddark.VaspelCore.utils.Sidebar;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,38 +17,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class EventListener implements Listener {
 
     private final Main plugin = Main.getInstance();
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) throws SQLException {
+    public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        String playerName = p.getName();
-        Statement st = Main.getConnection().createStatement();
-        ResultSet rangNumber = st.executeQuery("SELECT * FROM players WHERE uuid='" + p.getUniqueId().toString() + "';");
-        rangNumber.beforeFirst();
-        rangNumber.next();
-        ResultSet rangName = st.executeQuery("SELECT * FROM rangs WHERE id='" + rangNumber.getInt("rang") + "';");
-        rangName.beforeFirst();
-        rangName.next();
-        p.setPlayerListName(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("playerName")).replace("%player%", playerName).replace("%group%", rangName.getString("name").toUpperCase())));
-        p.setCustomName(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("playerName")).replace("%player%", playerName).replace("%group%", rangName.getString("name").toUpperCase())));
-        p.setCustomNameVisible(true);
-        e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("join-message")).replace("%player%", p.getDisplayName())));
+
         Sidebar s = new Sidebar();
         s.setup(p);
 
@@ -64,24 +46,7 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("leave-message")).replace("%player%", p.getDisplayName())));
         Main.vanishedPlayer.remove(p);
-    }
-
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent e) throws SQLException {
-        Player p = e.getPlayer();
-        String playerName = p.getName();
-        String message = e.getMessage();
-        Statement st = Main.getConnection().createStatement();
-        ResultSet rangNumber = st.executeQuery("SELECT * FROM players WHERE uuid='" + p.getUniqueId().toString() + "';");
-        rangNumber.beforeFirst();
-        rangNumber.next();
-        ResultSet rangName = st.executeQuery("SELECT * FROM rangs WHERE id='" + rangNumber.getInt("rang") + "';");
-        rangName.beforeFirst();
-        rangName.next();
-        e.setFormat(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(LanguageStrings.get().getString("chat-message")).replace("%player%", playerName).replace("%msg%", message).replace("%group%", rangName.getString("name").toUpperCase())));
-        st.close();
     }
 
     @EventHandler
